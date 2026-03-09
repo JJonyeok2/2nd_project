@@ -16,13 +16,16 @@ Created: 2026-03-09
 
 Updated:
 - 2026-03-09: initial version (조동휘)
+- 2026-03-09: pipeline db 패키지의 내부 모듈화 작업 반영 (조동휘)
 =========================================================================
 """
+
 import pandas as pd
 
-from pipeline.db import insert_dataframe
+from pipeline.db.writer.insert_dataframe import insert_dataframe
 from pipeline.etl import load_csv
 from pipeline.etl import standardize_customer_columns
+
 
 def run_etl() -> int:
     """
@@ -35,10 +38,11 @@ def run_etl() -> int:
     df = standardize_customer_columns(df)
 
     insert_count = insert_dataframe("creditcard_churn", df)
-    
+
     print(f"Inserted {insert_count} rows into the database.")
-    
+
     return insert_count
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     run_etl()
