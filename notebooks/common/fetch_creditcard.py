@@ -46,11 +46,11 @@ import requests
 from pandas import DataFrame, Series
 from typing import Tuple, Union
 
+from .config import PIPELINE_DATASET_URL
 
-PIPELINE_URL = "http://pipeline:8000/dataset/creditcard-churn"
-
-
-def fetch_creditcard(X_y_split: bool = False) -> Union[DataFrame, Tuple[DataFrame, Series]]:
+def fetch_creditcard(
+    X_y_split: bool = False,
+) -> Union[DataFrame, Tuple[DataFrame, Series]]:
     """
     pipeline과 통신하여 이미 수치화된 creditcard 데이터셋을 가져옵니다.
 
@@ -69,9 +69,7 @@ def fetch_creditcard(X_y_split: bool = False) -> Union[DataFrame, Tuple[DataFram
     # ---------------------------
     try:
         response = requests.get(
-            PIPELINE_URL,
-            params={"X_y_split": X_y_split},
-            timeout=10
+            PIPELINE_DATASET_URL, params={"X_y_split": X_y_split}, timeout=10
         )
         response.raise_for_status()
 
